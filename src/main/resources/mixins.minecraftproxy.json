@@ -1,0 +1,10 @@
+{
+  "package": "me.ilmars.mixin",
+  "refmap": "mixins.minecraftproxy.refmap.json",
+  "minVersion": "0.7",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinModList",
+    "NetworkManagerMixin"
+  ]
+}

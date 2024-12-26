@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "${modid}",
+    "name": "Minecraft Proxy",
+    "description": "A mod that lets you route your Minecraft traffic through a SOCKS proxy.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/IlmarsXd/MinecraftProxy/",
+    "updateUrl": "",
+    "authorList": [
+      "IlmarsXd"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
