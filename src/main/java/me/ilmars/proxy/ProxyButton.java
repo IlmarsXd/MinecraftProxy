@@ -2,6 +2,7 @@ package me.ilmars.proxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import org.apache.commons.lang3.StringUtils;
 
 import static me.ilmars.MinecraftProxy.mc;
 
@@ -12,7 +13,7 @@ public class ProxyButton extends GuiButton {
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-        displayString = "Proxy: " + ProxyHandler.lastProxyIp;
+        displayString = StringUtils.abbreviate("Proxy: " + ProxyHandler.lastProxyIp, 22);
         super.drawButton(mc, mouseX, mouseY);
     }
 
