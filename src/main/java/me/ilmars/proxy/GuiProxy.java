@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 final class GuiProxy extends GuiScreen {
     private final Color Color = new Color(160, 160, 160);
     private static final Pattern IP_PORT_PATTERN = Pattern.compile("^(?:\\d{1,3}\\.){3}\\d{1,3}:\\d{1,5}$");
+    private static final Pattern URL_PORT_PATTERN = Pattern.compile("^(?:\\w+\\.)+\\w+:\\d{1,5}$");
 
     private static final int BUTTON_SOCKS4 = 1;
     private static final int BUTTON_SOCKS5 = 2;
@@ -56,21 +57,21 @@ final class GuiProxy extends GuiScreen {
             ProxyHandler.proxy = new Proxy(socks4.isChecked(), "", 0, userID.getText(), username.getText(), password.getText());
             return true;
         }
-        if (!validatePortAndIp(ipAndPort)) {
+
+        String[] split = ipAndPort.split(":");
+
+        String ip;
+        int port;
+        try {
+            ip = split[0];
+            port = Integer.parseInt(split[1]);
+        } catch (Exception e) {
             msg = ChatFormatting.RED + "Invalid IP:PORT";
             ipPort.setFocused(true);
             return false;
         }
-
-        String[] split = ipAndPort.split(":");
-        String ip = split[0];
-        int port = Integer.parseInt(split[1]);
         ProxyHandler.proxy = new Proxy(socks4.isChecked(), ip, port, userID.getText(), username.getText(), password.getText());
         return true;
-    }
-
-    private static boolean validatePortAndIp(String ipAndPort) {
-        return IP_PORT_PATTERN.matcher(ipAndPort).matches();
     }
 
     private void centerButtons(int amount, int buttonLength, int gap) {
@@ -185,21 +186,21 @@ final class GuiProxy extends GuiScreen {
 
         // Text Fields
         this.ipPort = new GuiTextField(3, this.fontRendererObj, positionX, positionY[2], buttonLength, 20);
+        this.ipPort.setMaxStringLength(255);
         this.ipPort.setText(proxy.isEnabled() ? proxy.getIp() + ":" + proxy.getPort() : "");
         this.ipPort.setFocused(true);
-        this.ipPort.setMaxStringLength(255);
 
         this.username = new GuiTextField(4, this.fontRendererObj, positionX, positionY[4], buttonLength, 20);
-        this.username.setText(proxy.getUsername());
         this.username.setMaxStringLength(255);
+        this.username.setText(proxy.getUsername());
 
         this.userID = new GuiTextField(8, this.fontRendererObj, positionX, positionY[4], buttonLength, 20);
-        this.userID.setText(proxy.getUserID());
         this.userID.setMaxStringLength(255);
+        this.userID.setText(proxy.getUserID());
 
         this.password = new GuiTextField(5, this.fontRendererObj, positionX, positionY[5], buttonLength, 20);
-        this.password.setText(proxy.getPassword());
         this.password.setMaxStringLength(255);
+        this.password.setText(proxy.getPassword());
 
         // Buttons
         this.socks4 = new GuiCheckBox(BUTTON_SOCKS4, positionX + 10, positionY[1] + 5, "Socks4", proxy.getType() == ProxyType.SOCKS4);
